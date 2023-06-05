@@ -371,8 +371,9 @@ def _detect_local_metal():
         host=tvm.target.Target(  # TODO: assuming ARM mac for now
             {
                 "kind": "llvm",
-                "mtriple": "arm64-apple-macos",
-                "mcpu": "apple-latest",
+                #"mtriple": "arm64-apple-macos",
+                "mtriple": "x86_64-apple-darwin",
+                # "mcpu": "apple-latest",
             }
         ),
     )
@@ -413,9 +414,10 @@ def _detect_local_vulkan():
 
 
 def detect_local_target():
-    dev = tvm.metal()
-    if dev.exist:
-        return tvm.target.Target("apple/m1-gpu")
+    # dev = tvm.metal()
+    # if dev.exist:
+    #     print("Detected local Apple Metal GPU: ", dev)
+    #     return tvm.target.Target("apple/m1-gpu")
 
     for method in [
         _detect_local_metal,
