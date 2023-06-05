@@ -25,6 +25,25 @@ Conversation VicunaV11() {
   return conv;
 }
 
+Conversation DollyV2() {
+  Conversation conv;
+  conv.name = "dolly_v2";
+  conv.system =
+      ("A chat between a curious user and an artificial intelligence assistant. "
+       "The assistant gives helpful, detailed, and polite answers to the user's questions.");
+  conv.roles = {"USER", "ASSISTANT"};
+  conv.messages = {};
+  conv.offset = 0;
+  conv.separator_style = SeparatorStyle::kAddColon;
+  conv.seps = {" ", "</s>"};
+  // TODO(mlc-team): add eos to mlc-chat-config
+  // and remove eos from stop token setting.
+  conv.stop_tokens = {2};
+  conv.stop_str = "</s>";
+  conv.add_bos = true;
+  return conv;
+}
+
 Conversation ConvOneShot() {
   Conversation conv;
   conv.name = "conv_one_shot";
@@ -150,6 +169,7 @@ Conversation Conversation::FromTemplate(const std::string& name) {
       {"redpajama_chat", RedPajamaChat},
       {"rwkv", RWKV},
       {"LM", VanillaLM},
+      {"dolly", DollyV2}
   };
   auto it = factory.find(name);
   if (it == factory.end()) {
